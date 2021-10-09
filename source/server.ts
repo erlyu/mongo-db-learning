@@ -1,8 +1,9 @@
 import http from 'http';
 import express from 'express';
 // import bodyParser from 'body-parser';
-import logging from './logging';
-import config from './config';
+import logging from './config/logging';
+import config from './config/config';
+import sampleRoutes from './routes/sample';
 
 // where log is coming from
 const NAMESPACE = 'Server';
@@ -30,11 +31,6 @@ router.use((req, res, next) => {
 router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 
-router.use("/a", (req, res) => {
-    console.log("hi");
-    res.status(200).end();
-})
-
 // define rules of api, aka what is allowed
 router.use((req, res, next) => {
     // allows request from anywhere via *, but IPS and Routes should be predefined in future projects
@@ -51,6 +47,7 @@ router.use((req, res, next) => {
 });
 
 // define routes
+router.use('/sample', sampleRoutes);
 
 // define errors, where input has gotten past all routes
 // run with: nodemon source/server.ts
