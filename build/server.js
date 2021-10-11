@@ -8,11 +8,20 @@ const express_1 = __importDefault(require("express"));
 // import bodyParser from 'body-parser';
 const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
-const sample_1 = __importDefault(require("./routes/sample"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const book_1 = __importDefault(require("./routes/book"));
 // where log is coming from
 const NAMESPACE = 'Server';
 // define API behavior
 const router = (0, express_1.default)();
+mongoose_1.default
+    .connect(config_1.default.mongo.url, config_1.default.mongo.options)
+    .then((result) => {
+    logging_1.default.info(NAMESPACE, 'connected to mongoDB');
+})
+    .catch((error) => {
+    logging_1.default.info(NAMESPACE, error.message, error);
+});
 // log the request from client (think cse130 with the HTTP proxy)
 // Params: req - request object, res - resposne object, next - next function
 // middleware - means of utulizing info given to modify or return
@@ -43,7 +52,7 @@ router.use((req, res, next) => {
     next();
 });
 // define routes
-router.use('/sample', sample_1.default);
+router.use('/api/books', book_1.default);
 // define errors, where input has gotten past all routes
 // run with: nodemon source/server.ts
 router.use((req, res, next) => {

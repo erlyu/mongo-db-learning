@@ -3,12 +3,22 @@ import express from 'express';
 // import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
-import sampleRoutes from './routes/sample';
+import mongoose from 'mongoose';
+import bookRoutes from './routes/book';
 
 // where log is coming from
 const NAMESPACE = 'Server';
 // define API behavior
 const router = express();
+
+mongoose
+    .connect(config.mongo.url, config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'connected to mongoDB');
+    })
+    .catch((error) => {
+        logging.info(NAMESPACE, error.message, error);
+    });
 
 // log the request from client (think cse130 with the HTTP proxy)
 // Params: req - request object, res - resposne object, next - next function
@@ -47,7 +57,7 @@ router.use((req, res, next) => {
 });
 
 // define routes
-router.use('/sample', sampleRoutes);
+router.use('/api/books', bookRoutes);
 
 // define errors, where input has gotten past all routes
 // run with: nodemon source/server.ts
