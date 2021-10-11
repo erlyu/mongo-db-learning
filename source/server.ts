@@ -15,9 +15,13 @@ mongoose
     .connect(config.mongo.url, config.mongo.options)
     .then((result) => {
         logging.info(NAMESPACE, 'connected to mongoDB');
+        console.log("connected");
+        
     })
     .catch((error) => {
         logging.info(NAMESPACE, error.message, error);
+        console.log("error happened");
+        
     });
 
 // log the request from client (think cse130 with the HTTP proxy)

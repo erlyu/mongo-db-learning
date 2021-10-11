@@ -12,16 +12,9 @@ const MONGO_OPTIONS = {
     retryWrites: false
 };
 
-const MONGO_USERNAME = process.env.MONGO_USERNAME || 'erlyu';
-const MONGO_PASSWORD = process.env.MONGO_USERNAME || 'KX84435zi3792153';
-const MONGO_HOST = process.env.MONGO_URL || `mongodb+srv://erlyu:<KX84435zi3792153>@cluster0.insdo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-
 const MONGO = {
-    host: MONGO_HOST,
-    username: MONGO_USERNAME,
-    password: MONGO_PASSWORD,
     options: MONGO_OPTIONS,
-    url: `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}`
+    url: `mongodb+srv://john:CAR@cluster0.insdo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 };
 
 const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || 'localhost';
